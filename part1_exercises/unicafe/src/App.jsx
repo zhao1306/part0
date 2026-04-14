@@ -3,7 +3,6 @@ import { useState } from "react";
 const Button = ({ onClick, name }) => <button onClick={onClick}>{name}</button>;
 
 const Feedback = ({ addGood, addNeutral, addBad }) => {
-  console.log(addGood);
   return (
     <div>
       <h1>give feedback</h1>
@@ -15,6 +14,16 @@ const Feedback = ({ addGood, addNeutral, addBad }) => {
 };
 
 const Stats = ({ good, neutral, bad }) => {
+  console.log(good, neutral, bad);
+  if (good === 0 && neutral === 0 && bad === 0) {
+    return (
+      <div>
+        <h1>statistics</h1>
+        <p>No feedback given</p>
+      </div>
+    );
+  }
+
   let total = good + neutral + bad;
   let average = (good - bad) / total;
   let positive = (good / total) * 100;
