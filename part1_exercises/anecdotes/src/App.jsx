@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -18,28 +18,40 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
-  console.log(votes);
+  const [mostVotes, setMostVotes] = useState("");
+  const [maxVotes, setMaxVotes] = useState(0);
+
   const handleClick = () => {
-    console.log(anecdotes.length);
     const random_int = getRandomInt(anecdotes.length);
-    console.log(random_int);
     setSelected(random_int);
   };
 
   const handleVote = () => {
     let copy = [...votes];
     copy[selected] += 1;
-    setVotes(copy)
+    const max = Math.max(...copy);
+    const maxAnecdote = anecdotes[[...copy].indexOf(max)];
+    setMostVotes(maxAnecdote);
+    console.log(mostVotes);
+    setVotes(copy);
+    setMaxVotes(max);
   };
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <div>
         {anecdotes[selected]} has {votes[selected]} votes
       </div>
       <div>
         <button onClick={handleVote}>vote</button>
         <button onClick={handleClick}>next anecdote</button>
+      </div>
+      <div>
+        <h1>Anecdote with most votes</h1>
+        <div>
+          {mostVotes} with {maxVotes} votes
+        </div>
       </div>
     </div>
   );
