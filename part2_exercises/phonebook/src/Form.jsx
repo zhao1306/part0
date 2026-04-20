@@ -23,7 +23,6 @@ const Form = ({ persons, setPersons }) => {
   };
   return (
     <div>
-      <h2>add a new</h2>
       <form onSubmit={handleForm}>
         <div>
           name:{" "}

@@ -30,6 +30,7 @@ const App = () => {
         filter={filter}
         setFilter={setFilter}
       />
+      <h2>add a new</h2>
       <Form persons={persons} setPersons={setPersons} />
       <h2>Numbers</h2>
       <Numbers persons={persons} filtered={filtered} filter={filter} />
