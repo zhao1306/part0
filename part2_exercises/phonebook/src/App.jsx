@@ -4,14 +4,16 @@ import axios from "axios";
 import Form from "./Form.jsx";
 import Filter from "./Filter.jsx";
 import Numbers from "./Numbers.jsx";
+import personsService from "./services/persons.jsx";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/persons")
-      .then((response) => setPersons(response.data));
+    personsService.getAll().then((initialPersons) => {
+      console.log(initialPersons);
+      setPersons(initialPersons);
+    });
   }, []);
 
   const [filter, setFilter] = useState("");

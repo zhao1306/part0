@@ -19,6 +19,12 @@
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": "4"
+    },
+    {
+      "name": "Joe Bart",
+      "number": "67-420-6169",
+      "id": "bOzkI4KDLgc"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
