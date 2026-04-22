@@ -15,7 +15,18 @@ const Form = ({ persons, setPersons }) => {
     };
     const names = persons.map((person) => person.name);
     if (names.includes(newName)) {
-      alert(`${newName} is already added to phonebook`);
+      window.confirm(
+        `${newName} is already added to phonebook. Do you want to replace with new number?`,
+      );
+      const replacedId = persons.find((person) => person.name === newName).id;
+      console.log(replacedId);
+      personsService.update(replacedId, newPerson).then((response) => {
+        console.log(response);
+        const newPersons = persons.map((person) =>
+          person.id === replacedId ? response : person,
+        );
+        setPersons(newPersons);
+      });
     } else {
       personsService.create(newPerson).then((response) => {
         personsService.getAll().then((initialPersons) => {

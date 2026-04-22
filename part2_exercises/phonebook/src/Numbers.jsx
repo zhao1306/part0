@@ -2,6 +2,7 @@ import axios from "axios";
 import personsServices from "./services/persons";
 const Numbers = ({ persons, setPersons, filtered, filter }) => {
   const handleDelete = (id) => {
+    window.confirm(`Are you sure you want to delete ${id}`);
     console.log("deleting ", id);
     personsServices.deletePerson(id).then((response) => {
       console.log("delete tried");
