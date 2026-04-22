@@ -17,9 +17,12 @@ const Form = ({ persons, setPersons }) => {
     if (names.includes(newName)) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      personsService
-        .create(newPerson)
-        .then((response) => setPersons(persons.concat(newPerson)));
+      personsService.create(newPerson).then((response) => {
+        personsService.getAll().then((initialPersons) => {
+          console.log(initialPersons);
+          setPersons(initialPersons);
+        });
+      });
 
       setNewName("");
       setNewNumber("");

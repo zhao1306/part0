@@ -38,7 +38,12 @@ const App = () => {
       <h2>add a new</h2>
       <Form persons={persons} setPersons={setPersons} />
       <h2>Numbers</h2>
-      <Numbers persons={persons} filtered={filtered} filter={filter} />
+      <Numbers
+        persons={persons}
+        setPersons={setPersons}
+        filtered={filtered}
+        filter={filter}
+      />
     </div>
   );
 };
