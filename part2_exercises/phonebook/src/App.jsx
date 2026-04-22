@@ -5,9 +5,12 @@ import Form from "./Form.jsx";
 import Filter from "./Filter.jsx";
 import Numbers from "./Numbers.jsx";
 import personsService from "./services/persons.jsx";
+import Notification from "./Notification.jsx";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
+  const [notifMessage, setNotifMessage] = useState("");
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     personsService.getAll().then((initialPersons) => {
@@ -29,6 +32,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification success={success} message={notifMessage} />
       <Filter
         persons={persons}
         setPersons={setPersons}
@@ -36,7 +40,12 @@ const App = () => {
         setFilter={setFilter}
       />
       <h2>add a new</h2>
-      <Form persons={persons} setPersons={setPersons} />
+      <Form
+        persons={persons}
+        setPersons={setPersons}
+        setSuccess={setSuccess}
+        setNotifMessage={setNotifMessage}
+      />
       <h2>Numbers</h2>
       <Numbers
         persons={persons}
