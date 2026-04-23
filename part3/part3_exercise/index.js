@@ -5,7 +5,7 @@ app.use(express.json());
 
 const generateId = () => {
   const maxId =
-    notes.length > 0 ? Math.max(...notes.map((n) => Number(n.id))) : 0;
+    data.length > 0 ? Math.max(...data.map((n) => Number(n.id))) : 0;
   return String(maxId + 1);
 };
 
@@ -36,9 +36,32 @@ app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
 });
 
+app.get("/info", (request, response) => {
+  const id = generateId() - 1;
+  const timestamp = new Date();
+  const msg =
+    "<p>" +
+    `There are ${id} phone numbers.` +
+    "</p><p>" +
+    `Sent at ${timestamp}` +
+    "</p>";
+  console.log(msg);
+  response.send(msg);
+});
+
 app.get("/api/persons", (request, response) => {
   console.log(data);
   response.json(data);
+});
+
+app.get("/api/persons/:id", (request, response) => {
+  const id = request.params.id;
+  const person = data.find((note) => note.id === id);
+  if (person) {
+    response.json(person);
+  } else {
+    response.status(404).end();
+  }
 });
 
 const PORT = 3001;
