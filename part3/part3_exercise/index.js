@@ -3,10 +3,15 @@ const app = express();
 
 app.use(express.json());
 
-const generateId = () => {
+const maxId = () => {
   const maxId =
     data.length > 0 ? Math.max(...data.map((n) => Number(n.id))) : 0;
-  return String(maxId + 1);
+  return String(maxId);
+};
+
+const generateId = () => {
+  //1 billion 1,000,000,000
+  return Math.floor(Math.random() * 1000000000);
 };
 
 let data = [
@@ -37,7 +42,7 @@ app.get("/", (request, response) => {
 });
 
 app.get("/info", (request, response) => {
-  const id = generateId() - 1;
+  const id = maxId();
   const timestamp = new Date();
   const msg =
     "<p>" +
@@ -68,6 +73,25 @@ app.delete("/api/persons/:id", (request, response) => {
   const id = request.params.id;
   data = data.filter((entry) => entry.id !== id);
   response.status(204).end();
+});
+
+app.post("/api/persons", (request, response) => {
+  const body = request.body;
+
+  console.log(generateId());
+  if (!body) {
+    return response.status(400).json({
+      error: "content missing",
+    });
+  }
+
+  const person = {
+    id: generateId(),
+    name: body.name,
+    number: body.number,
+  };
+  data = data.concat(person);
+  response.json(person);
 });
 
 const PORT = 3001;
