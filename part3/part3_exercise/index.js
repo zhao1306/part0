@@ -1,8 +1,13 @@
 const express = require("express");
 var morgan = require("morgan");
+const cors = require("cors");
+
 const app = express();
 
+//Middlewares
 app.use(express.json());
+app.use(cors());
+app.use(express.static("dist"));
 
 morgan.token("body", (req) => {
   if (req.method === "POST" || req.method === "PUT") {
@@ -11,7 +16,9 @@ morgan.token("body", (req) => {
   return "";
 });
 
-app.use(morgan(":method :url :status :res[content-length] - :response-time ms :body"));
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms :body"),
+);
 
 const maxId = () => {
   const maxId =
@@ -123,7 +130,7 @@ app.post("/api/persons", (request, response) => {
   response.json(person);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
